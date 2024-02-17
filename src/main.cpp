@@ -31,21 +31,10 @@ class $modify(AltMenuLayer, MenuLayer) {
 			//res_menu->setPosition(winSize.width/300.f, winSize.height/0.995703125f);
 		#else
 			auto res_menu = this->getChildByID("close-menu");
+			auto cls_btn = res_menu->getChildByID("close-button");
 		#endif
-		if(Loader::get()->isModLoaded("muhammadgames.bettermenu")) {
-			auto betterMenuMod = Loader::get()->getLoadedMod("muhammadgames.bettermenu");
-			if (betterMenuMod->getSettingValue<bool>("RunMainMenu") && betterMenuMod->getSettingValue<bool>("MoveMenuPos") && !betterMenuMod->getSettingValue<bool>("MoveMenuPosFlip")) {
-				res_menu->setAnchorPoint(CCPoint(0.5, 0.5));
-				res_menu->setPosition(winSize.width/300.f, winSize.height/0.995703125f);
-			
-				
-				
-				//messy
-			} else {res_menu->setAnchorPoint(CCPoint(0, 1));
-			res_menu->setPosition(winSize.width/300.f, winSize.height/0.995703125f);}
-		}else{res_menu->setAnchorPoint(CCPoint(0, 1));
-			res_menu->setPosition(winSize.width/300.f, winSize.height/0.995703125f);}
 
+	
 		auto res_spr = CCSprite::createWithSpriteFrameName("GJ_updateBtn_001.png");
 		res_spr->setScale(0.7);
 		auto res_btn = CCMenuItemSpriteExtra::create(
@@ -53,7 +42,24 @@ class $modify(AltMenuLayer, MenuLayer) {
 			this, 
 			menu_selector(AltMenuLayer::onRestart));
 		res_btn->setContentSize(CCSize(32.2, 33.25));
-		res_btn->setPosition(16.1, -19.375);
+		res_btn->setPosition(183.9, 16.625);
+		res_btn->setID("restart-button");
+
+		// better menu stuff
+		if(Loader::get()->isModLoaded("muhammadgames.bettermenu")) {
+			auto betterMenuMod = Loader::get()->getLoadedMod("muhammadgames.bettermenu");
+			if (betterMenuMod->getSettingValue<bool>("RunMainMenu") && betterMenuMod->getSettingValue<bool>("MoveMenuPos") && !betterMenuMod->getSettingValue<bool>("MoveMenuPosFlip")) {
+				res_menu->setAnchorPoint(CCPoint(0.5, 0.5));
+				
+				
+				
+				//messy
+			} else {res_menu->setAnchorPoint(CCPoint(0, 1));}
+		} else {res_menu->setAnchorPoint(CCPoint(0, 1));}
+		
+		res_menu->setPosition(winSize.width/300.f, winSize.height/0.995703125f);
+
+	
 		res_menu->addChild(res_btn);
 
 		auto scale = Mod::get()->getSettingValue<double>("size");
